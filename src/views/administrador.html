@@ -17,7 +17,8 @@
             <a href="#" class="menu-item active" data-view="dashboard">📊 Dashboard</a>
             <a href="#" class="menu-item" data-view="registrar-gasto">💰 Registrar Gasto</a>
             <a href="#" class="menu-item" data-view="registrar-entrada">💵 Registrar Entrada</a>
-            <a href="#" class="menu-item" data-view="empleados">👥 Empleados</a>
+            <a href="#" class="menu-item" data-view="empleados">💼 Empleados</a>
+            <a href="#" class="menu-item" data-view="mis-clientes">👥 Clientes</a>
             <a href="#" class="menu-item" data-view="reportes">📄 Reportes Mensuales</a>
             <a href="#" class="menu-item" data-view="respaldos">💾 Respaldos</a>
             <a href="#" class="menu-item" data-view="cotizador">💬 Cotizador de Planes</a>
@@ -206,7 +207,15 @@
         <div id="empleados" class="view">
             <div class="section-header">
                 <h2>Gestión de Empleados</h2>
-                <button class="btn-primary" onclick="addEmployee()">➕ Agregar Empleado</button>
+                <div class="col-3 rows-2">
+                    <button class="btn-primary" onclick="addEmployee()">➕ Agregar Empleado</button>
+                </div>
+                <div class="col-3 rows-2">
+                    <button class="btn-warning">✏️ Editar Empleado</button>
+                </div>
+                <div class="col-3 row-2">
+                    <button class="btn-danger">🗑️ Eliminar Empleado</button>
+                </div>
             </div>
 
             <div class="employees-grid">
@@ -262,6 +271,100 @@
                 </div>
             </div>
         </div>
+
+        <!-- MIS CLIENTES VIEW -->
+        <div id="mis-clientes" class="view">
+            <div class="section-header">
+                <h2>Mis Clientes Activos</h2>
+                <div class="search-bar">
+                    <input type="text" placeholder="🔍 Buscar cliente...">
+                </div>
+            </div>
+
+            <div class="clients-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Plan</th>
+                            <th>Monto Mensual</th>
+                            <th>Próximo Pago</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Marta Rodríguez</td>
+                            <td>Plan Premium</td>
+                            <td>$89.00</td>
+                            <td>02 Dic 2024</td>
+                            <td><span class="badge-warning">Próximo</span></td>
+                            <td>
+                                <button class="btn-small" onclick="editClient()">✏️ Editar</button>
+                                <button class="btn-small" onclick="markPaid()">✓ Marcar Pagado</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Luis Fernández</td>
+                            <td>Plan Básico</td>
+                            <td>$45.00</td>
+                            <td>03 Dic 2024</td>
+                            <td><span class="badge-warning">Próximo</span></td>
+                            <td>
+                                <button class="btn-small" onclick="editClient()">✏️ Editar</button>
+                                <button class="btn-small" onclick="markPaid()">✓ Marcar Pagado</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Ana García</td>
+                            <td>Plan Elite</td>
+                            <td>$150.00</td>
+                            <td>05 Dic 2024</td>
+                            <td><span class="badge-warning">Próximo</span></td>
+                            <td>
+                                <button class="btn-small" onclick="editClient()">✏️ Editar</button>
+                                <button class="btn-small" onclick="markPaid()">✓ Marcar Pagado</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Carlos Sánchez</td>
+                            <td>Plan Premium</td>
+                            <td>$89.00</td>
+                            <td>30 Nov 2024</td>
+                            <td><span class="badge-success">Pagado</span></td>
+                            <td>
+                                <button class="btn-small" onclick="editClient()">✏️ Editar</button>
+                                <button class="btn-small" onclick="viewHistory()">📋 Historial</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Elena Martínez</td>
+                            <td>Plan Básico</td>
+                            <td>$45.00</td>
+                            <td>28 Nov 2024</td>
+                            <td><span class="badge-success">Pagado</span></td>
+                            <td>
+                                <button class="btn-small" onclick="editClient()">✏️ Editar</button>
+                                <button class="btn-small" onclick="viewHistory()">📋 Historial</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Roberto López</td>
+                            <td>Plan Elite</td>
+                            <td>$150.00</td>
+                            <td>25 Nov 2024</td>
+                            <td><span class="badge-success">Pagado</span></td>
+                            <td>
+                                <button class="btn-small" onclick="editClient()">✏️ Editar</button>
+                                <button class="btn-small" onclick="viewHistory()">📋 Historial</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
 
         <!-- REPORTES VIEW -->
         <div id="reportes" class="view">

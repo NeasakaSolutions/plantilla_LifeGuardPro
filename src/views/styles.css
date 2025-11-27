@@ -1168,3 +1168,48 @@ tbody tr:hover {
         align-items: flex-start;
     }
 }
+
+.btn-warning {
+    background-color: #fbc02d;  /* Amarillo */
+    color: #fff;               /* Texto negro */
+    padding: 10px 15px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.plans-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    align-items: stretch;
+}
+
+.plan-card {
+    height: 100%;
+    overflow: hidden;
+}
+
+.plan-card.featured {
+    transform: scale(1.02);
+    max-width: 100%;
+}

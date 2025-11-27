@@ -14,11 +14,11 @@
             <h2>LifeGuard Pro</h2>
         </div>
         <nav class="sidebar-menu">
-            <a href="#" class="menu-item active" data-view="dashboard">📊 Mi Dashboard</a>
+            <!--<a href="#" class="menu-item active" data-view="dashboard">📊 Mi Dashboard</a>-->
             <a href="#" class="menu-item" data-view="registrar-cliente">➕ Registrar Cliente</a>
             <a href="#" class="menu-item" data-view="mis-clientes">👥 Mis Clientes</a>
             <a href="#" class="menu-item" data-view="cotizador">💬 Cotizador de Planes</a>
-            <a href="#" class="menu-item" data-view="mi-reporte">📄 Mi Reporte Mensual</a>
+            <!--<a href="#" class="menu-item" data-view="mi-reporte">📄 Mi Reporte Mensual</a>-->
         </nav>
         <button class="btn-logout" onclick="logout()">🚪 Cerrar Sesión</button>
     </div>
@@ -34,88 +34,8 @@
             </div>
         </div>
 
-        <!-- DASHBOARD VIEW -->
-        <div id="dashboard" class="view active">
-            <div class="dashboard-grid">
-                <div class="stat-card">
-                    <div class="stat-icon" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">👥</div>
-                    <div class="stat-info">
-                        <h3>Clientes Este Mes</h3>
-                        <p class="stat-value">6</p>
-                        <span class="stat-change">↑ 2 más que el mes anterior</span>
-                    </div>
-                </div>
-
-                <div class="stat-card">
-                    <div class="stat-icon" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">💰</div>
-                    <div class="stat-info">
-                        <h3>Comisión Este Mes</h3>
-                        <p class="stat-value">$2,450.00</p>
-                        <span class="stat-change">↑ 15% más que el mes anterior</span>
-                    </div>
-                </div>
-
-                <div class="stat-card">
-                    <div class="stat-icon" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">📈</div>
-                    <div class="stat-info">
-                        <h3>Total de Clientes</h3>
-                        <p class="stat-value">24</p>
-                        <span class="stat-change">12 activos este mes</span>
-                    </div>
-                </div>
-
-                <div class="stat-card">
-                    <div class="stat-icon" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">⏰</div>
-                    <div class="stat-info">
-                        <h3>Próximo Cobro</h3>
-                        <p class="stat-value">2 Dic</p>
-                        <span class="stat-change">Clientes que deben pago</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="charts-section">
-                <div class="chart-container">
-                    <h2>Clientes por Plan - Últimos 6 Meses</h2>
-                    <canvas id="clientesChart"></canvas>
-                </div>
-
-                <div class="chart-container">
-                    <h2>Distribución de Planes</h2>
-                    <canvas id="planesChart"></canvas>
-                </div>
-            </div>
-
-            <div class="upcoming-payments">
-                <h2>Próximos Cobros</h2>
-                <div class="payments-list">
-                    <div class="payment-item">
-                        <div class="payment-info">
-                            <p><strong>Marta Rodríguez</strong> - Plan Premium</p>
-                            <small>$89.00 - Vence: 2 Dic 2024</small>
-                        </div>
-                        <div class="payment-status pending">Pendiente</div>
-                    </div>
-                    <div class="payment-item">
-                        <div class="payment-info">
-                            <p><strong>Luis Fernández</strong> - Plan Básico</p>
-                            <small>$45.00 - Vence: 3 Dic 2024</small>
-                        </div>
-                        <div class="payment-status pending">Pendiente</div>
-                    </div>
-                    <div class="payment-item">
-                        <div class="payment-info">
-                            <p><strong>Ana García</strong> - Plan Elite</p>
-                            <small>$150.00 - Vence: 5 Dic 2024</small>
-                        </div>
-                        <div class="payment-status pending">Pendiente</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- REGISTRAR CLIENTE VIEW -->
-        <div id="registrar-cliente" class="view">
+         <!-- REGISTRAR CLIENTE VIEW -->
+        <div id="registrar-cliente" class="view-active">
             <div class="form-container">
                 <h2>Registrar Nuevo Cliente</h2>
                 <form id="clienteForm" class="admin-form">
@@ -544,6 +464,51 @@
         function printReport() {
             window.print();
         }
+
+
+
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        document.querySelectorAll('.menu-item').forEach(item => {
+    item.addEventListener('click', function(e) {
+        e.preventDefault();
+
+        const view = this.getAttribute('data-view');
+
+        // Ocultar todas las vistas
+        document.querySelectorAll('.view, .view-active').forEach(sec => {
+            sec.classList.remove('view-active');
+            sec.classList.add('view');
+        });
+
+        // Mostrar la vista seleccionada
+        document.getElementById(view).classList.add('view-active');
+
+        // Resaltar menú activo
+        document.querySelectorAll('.menu-item').forEach(i => i.classList.remove('active'));
+        this.classList.add('active');
+    });
+});
     </script>
 </body>
 </html>
