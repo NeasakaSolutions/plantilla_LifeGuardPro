@@ -289,3 +289,41 @@ window.debug = {
         console.log('Datos limpiados');
     }
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function toggleMenu() {
+    document.querySelector('.sidebar').classList.toggle('active');
+
+    // Overlay
+    let overlay = document.querySelector('.overlay');
+    if (!overlay) {
+        overlay = document.createElement('div');
+        overlay.classList.add('overlay');
+        document.body.appendChild(overlay);
+    }
+
+    overlay.classList.toggle('show');
+
+    overlay.onclick = () => {
+        document.querySelector('.sidebar').classList.remove('active');
+        overlay.classList.remove('show');
+    };
+}
+
