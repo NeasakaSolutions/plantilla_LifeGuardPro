@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Administrador - LifeGuard Pro</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+</head>
+<body class="admin-page">
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-logo">🛡️</div>
+            <h2>LifeGuard Pro</h2>
+        </div>
+        <nav class="sidebar-menu">
+            <a href="#" class="menu-item active" data-view="dashboard">📊 Dashboard</a>
+            <a href="#" class="menu-item" data-view="registrar-gasto">💰 Registrar Gasto</a>
+            <a href="#" class="menu-item" data-view="registrar-entrada">💵 Registrar Entrada</a>
+            <a href="#" class="menu-item" data-view="empleados">👥 Empleados</a>
+            <a href="#" class="menu-item" data-view="reportes">📄 Reportes Mensuales</a>
+            <a href="#" class="menu-item" data-view="respaldos">💾 Respaldos</a>
+            <a href="#" class="menu-item" data-view="cotizador">💬 Cotizador de Planes</a>
+        </nav>
+        <button class="btn-logout" onclick="logout()">🚪 Cerrar Sesión</button>
+    </div>
+
+    <div class="main-content">
+        <div class="top-bar">
+            <div class="welcome-section">
+                <h1>Bienvenido, Administrador</h1>
+                <p id="current-date"></p>
+            </div>
+            <div class="user-section">
+                <span>👤 Admin User</span>
+            </div>
+        </div>
+
+        <!-- DASHBOARD VIEW -->
+        <div id="dashboard" class="view active">
+            <div class="dashboard-grid">
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">💵</div>
+                    <div class="stat-info">
+                        <h3>Entradas Totales</h3>
+                        <p class="stat-value">$45,230.50</p>
+                        <span class="stat-change">↑ 12.5% este mes</span>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">💸</div>
+                    <div class="stat-info">
+                        <h3>Gastos Totales</h3>
+                        <p class="stat-value">$18,900.00</p>
+                        <span class="stat-change">↓ 8.3% este mes</span>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">📈</div>
+                    <div class="stat-info">
+                        <h3>Ganancia Neta</h3>
+                        <p class="stat-value">$26,330.50</p>
+                        <span class="stat-change">✓ En ganancias</span>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">👥</div>
+                    <div class="stat-info">
+                        <h3>Empleados Activos</h3>
+                        <p class="stat-value">8</p>
+                        <span class="stat-change">2 nuevos este mes</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="charts-section">
+                <div class="chart-container">
+                    <h2>Flujo de Caja - Últimos 6 Meses</h2>
+                    <canvas id="flujoChart"></canvas>
+                </div>
+
+                <div class="chart-container">
+                    <h2>Distribución de Gastos</h2>
+                    <canvas id="gastosChart"></canvas>
+                </div>
+            </div>
+
+            <div class="recent-activity">
+                <h2>Actividad Reciente</h2>
+                <div class="activity-list">
+                    <div class="activity-item">
+                        <span class="activity-icon">➕</span>
+                        <div class="activity-info">
+                            <p><strong>Entrada Registrada</strong> - Juan Pérez registró entrada de $5,000</p>
+                            <small>Hace 2 horas</small>
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <span class="activity-icon">📊</span>
+                        <div class="activity-info">
+                            <p><strong>Reporte Enviado</strong> - Carlos López envió reporte mensual</p>
+                            <small>Hace 5 horas</small>
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <span class="activity-icon">🔔</span>
+                        <div class="activity-info">
+                            <p><strong>Nuevo Cliente</strong> - María González registrada en plan Premium</p>
+                            <small>Hace 1 día</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- REGISTRAR GASTO VIEW -->
+        <div id="registrar-gasto" class="view">
+            <div class="form-container">
+                <h2>Registrar Nuevo Gasto</h2>
+                <form id="gastoForm" class="admin-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Descripción del Gasto</label>
+                            <input type="text" placeholder="Ej: Servicios de oficina" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Categoría</label>
+                            <select required>
+                                <option>Seleccionar categoría</option>
+                                <option>Salarios</option>
+                                <option>Servicios</option>
+                                <option>Suministros</option>
+                                <option>Publicidad</option>
+                                <option>Otros</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Monto ($)</label>
+                            <input type="number" placeholder="0.00" step="0.01" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Fecha</label>
+                            <input type="date" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Notas Adicionales</label>
+                        <textarea placeholder="Detalles del gasto..." rows="4"></textarea>
+                    </div>
+
+                    <button type="submit" class="btn-primary">💾 Guardar Gasto</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- REGISTRAR ENTRADA VIEW -->
+        <div id="registrar-entrada" class="view">
+            <div class="form-container">
+                <h2>Registrar Nueva Entrada de Dinero</h2>
+                <form id="entradaForm" class="admin-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Descripción de Entrada</label>
+                            <input type="text" placeholder="Ej: Pago de cliente XYZ" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Fuente de Ingreso</label>
+                            <select required>
+                                <option>Seleccionar fuente</option>
+                                <option>Pago de Clientes</option>
+                                <option>Comisiones</option>
+                                <option>Otros Ingresos</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Monto ($)</label>
+                            <input type="number" placeholder="0.00" step="0.01" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Fecha</label>
+                            <input type="date" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Notas Adicionales</label>
+                        <textarea placeholder="Detalles de la entrada..." rows="4"></textarea>
+                    </div>
+
+                    <button type="submit" class="btn-primary">💾 Guardar Entrada</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- EMPLEADOS VIEW -->
+        <div id="empleados" class="view">
+            <div class="section-header">
+                <h2>Gestión de Empleados</h2>
+                <button class="btn-primary" onclick="addEmployee()">➕ Agregar Empleado</button>
+            </div>
+
+            <div class="employees-grid">
+                <div class="employee-card">
+                    <div class="employee-header">
+                        <h3>Juan Pérez</h3>
+                        <span class="status-badge active">Activo</span>
+                    </div>
+                    <div class="employee-details">
+                        <p><strong>Rol:</strong> Asesor de Seguros</p>
+                        <p><strong>Teléfono:</strong> +34 612 345 678</p>
+                        <p><strong>Clientes:</strong> 24</p>
+                        <p><strong>Comisión Este Mes:</strong> $2,450.00</p>
+                    </div>
+                    <div class="employee-actions">
+                        <button class="btn-small" onclick="viewEmployee()">👁️ Ver Detalles</button>
+                        <button class="btn-small" onclick="viewReport()">📊 Ver Reporte</button>
+                    </div>
+                </div>
+
+                <div class="employee-card">
+                    <div class="employee-header">
+                        <h3>Carlos López</h3>
+                        <span class="status-badge active">Activo</span>
+                    </div>
+                    <div class="employee-details">
+                        <p><strong>Rol:</strong> Asesor de Seguros</p>
+                        <p><strong>Teléfono:</strong> +34 612 345 679</p>
+                        <p><strong>Clientes:</strong> 19</p>
+                        <p><strong>Comisión Este Mes:</strong> $1,890.00</p>
+                    </div>
+                    <div class="employee-actions">
+                        <button class="btn-small" onclick="viewEmployee()">👁️ Ver Detalles</button>
+                        <button class="btn-small" onclick="viewReport()">📊 Ver Reporte</button>
+                    </div>
+                </div>
+
+                <div class="employee-card">
+                    <div class="employee-header">
+                        <h3>María González</h3>
+                        <span class="status-badge active">Activo</span>
+                    </div>
+                    <div class="employee-details">
+                        <p><strong>Rol:</strong> Asesor de Seguros</p>
+                        <p><strong>Teléfono:</strong> +34 612 345 680</p>
+                        <p><strong>Clientes:</strong> 31</p>
+                        <p><strong>Comisión Este Mes:</strong> $3,120.00</p>
+                    </div>
+                    <div class="employee-actions">
+                        <button class="btn-small" onclick="viewEmployee()">👁️ Ver Detalles</button>
+                        <button class="btn-small" onclick="viewReport()">📊 Ver Reporte</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- REPORTES VIEW -->
+        <div id="reportes" class="view">
+            <div class="section-header">
+                <h2>Reportes Mensuales</h2>
+            </div>
+
+            <div class="reports-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Empleado</th>
+                            <th>Mes</th>
+                            <th>Clientes Vendidos</th>
+                            <th>Monto Comisión</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Juan Pérez</td>
+                            <td>Noviembre 2024</td>
+                            <td>6</td>
+                            <td>$2,450.00</td>
+                            <td><span class="badge-success">Enviado</span></td>
+                            <td>
+                                <button class="btn-small" onclick="downloadReport()">⬇️ Descargar</button>
+                                <button class="btn-small" onclick="viewReportDetail()">👁️ Ver</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Carlos López</td>
+                            <td>Noviembre 2024</td>
+                            <td>4</td>
+                            <td>$1,890.00</td>
+                            <td><span class="badge-success">Enviado</span></td>
+                            <td>
+                                <button class="btn-small" onclick="downloadReport()">⬇️ Descargar</button>
+                                <button class="btn-small" onclick="viewReportDetail()">👁️ Ver</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>María González</td>
+                            <td>Noviembre 2024</td>
+                            <td>8</td>
+                            <td>$3,120.00</td>
+                            <td><span class="badge-success">Enviado</span></td>
+                            <td>
+                                <button class="btn-small" onclick="downloadReport()">⬇️ Descargar</button>
+                                <button class="btn-small" onclick="viewReportDetail()">👁️ Ver</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- RESPALDOS VIEW -->
+        <div id="respaldos" class="view">
+            <div class="section-header">
+                <h2>Sistema de Respaldos</h2>
+                <button class="btn-primary" onclick="createBackup()">💾 Crear Respaldo Ahora</button>
+            </div>
+
+            <div class="backups-list">
+                <div class="backup-item">
+                    <div class="backup-info">
+                        <h3>Respaldo - Noviembre 2024</h3>
+                        <p>Reporte completo del mes</p>
+                        <small>Creado: 30 Nov 2024 - 11:45 PM</small>
+                    </div>
+                    <button class="btn-small" onclick="restoreBackup()">♻️ Restaurar</button>
+                    <button class="btn-small" onclick="downloadBackup()">⬇️ Descargar</button>
+                </div>
+
+                <div class="backup-item">
+                    <div class="backup-info">
+                        <h3>Respaldo - Octubre 2024</h3>
+                        <p>Reporte completo del mes</p>
+                        <small>Creado: 31 Oct 2024 - 11:30 PM</small>
+                    </div>
+                    <button class="btn-small" onclick="restoreBackup()">♻️ Restaurar</button>
+                    <button class="btn-small" onclick="downloadBackup()">⬇️ Descargar</button>
+                </div>
+
+                <div class="backup-item">
+                    <div class="backup-info">
+                        <h3>Respaldo - Septiembre 2024</h3>
+                        <p>Reporte completo del mes</p>
+                        <small>Creado: 30 Sep 2024 - 11:15 PM</small>
+                    </div>
+                    <button class="btn-small" onclick="restoreBackup()">♻️ Restaurar</button>
+                    <button class="btn-small" onclick="downloadBackup()">⬇️ Descargar</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- COTIZADOR VIEW -->
+        <div id="cotizador" class="view">
+            <div class="section-header">
+                <h2>Cotizador de Planes de Seguros</h2>
+            </div>
+
+            <div class="plans-grid">
+                <div class="plan-card">
+                    <div class="plan-badge">BÁSICO</div>
+                    <h3>Plan Básico</h3>
+                    <div class="plan-price">
+                        <span class="currency">$</span>
+                        <span class="amount">45</span>
+                        <span class="period">/mes</span>
+                    </div>
+                    <div class="plan-features">
+                        <p>✓ Cobertura básica $100,000</p>
+                        <p>✓ Asistencia médica 24/7</p>
+                        <p>✓ Sin comisiones médicas</p>
+                        <p>✓ Validez nacional</p>
+                    </div>
+                    <button class="btn-plan">Ver Detalles</button>
+                </div>
+
+                <div class="plan-card featured">
+                    <div class="plan-badge featured">POPULAR</div>
+                    <h3>Plan Premium</h3>
+                    <div class="plan-price">
+                        <span class="currency">$</span>
+                        <span class="amount">89</span>
+                        <span class="period">/mes</span>
+                    </div>
+                    <div class="plan-features">
+                        <p>✓ Cobertura amplia $250,000</p>
+                        <p>✓ Asistencia médica 24/7</p>
+                        <p>✓ Comisión médica 20%</p>
+                        <p>✓ Validez nacional e internacional</p>
+                    </div>
+                    <button class="btn-plan featured">Ver Detalles</button>
+                </div>
+
+                <div class="plan-card">
+                    <div class="plan-badge">ÉLITE</div>
+                    <h3>Plan Elite</h3>
+                    <div class="plan-price">
+                        <span class="currency">$</span>
+                        <span class="amount">150</span>
+                        <span class="period">/mes</span>
+                    </div>
+                    <div class="plan-features">
+                        <p>✓ Cobertura total $500,000</p>
+                        <p>✓ Asistencia médica prioritaria</p>
+                        <p>✓ Comisión médica 35%</p>
+                        <p>✓ Cobertura mundial</p>
+                    </div>
+                    <button class="btn-plan">Ver Detalles</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // Inicializar gráficos
+        document.addEventListener('DOMContentLoaded', function() {
+            if(document.getElementById('flujoChart')) {
+                initFlowChart();
+            }
+            if(document.getElementById('gastosChart')) {
+                initExpensesChart();
+            }
+            updateDate();
+        });
+
+        function initFlowChart() {
+            const ctx = document.getElementById('flujoChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre'],
+                    datasets: [{
+                        label: 'Entradas',
+                        data: [38000, 42000, 40500, 45000, 43000, 45230],
+                        borderColor: '#667eea',
+                        backgroundColor: 'rgba(102, 126, 234, 0.1)',
+                        tension: 0.4,
+                        borderWidth: 3,
+                        fill: true
+                    }, {
+                        label: 'Gastos',
+                        data: [15000, 16500, 17000, 18000, 18500, 18900],
+                        borderColor: '#f5576c',
+                        backgroundColor: 'rgba(245, 87, 108, 0.1)',
+                        tension: 0.4,
+                        borderWidth: 3,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    plugins: {
+                        legend: { position: 'top' }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) {
+                                    return '$' + value.toLocaleString();
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function initExpensesChart() {
+            const ctx = document.getElementById('gastosChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Salarios', 'Servicios', 'Suministros', 'Publicidad', 'Otros'],
+                    datasets: [{
+                        data: [8000, 5200, 2800, 1900, 1000],
+                        backgroundColor: [
+                            '#667eea',
+                            '#f093fb',
+                            '#4facfe',
+                            '#fa709a',
+                            '#fee140'
+                        ],
+                        borderColor: '#fff',
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: { position: 'right' }
+                    }
+                }
+            });
+        }
+
+        function updateDate() {
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            const today = new Date().toLocaleDateString('es-ES', options);
+            document.getElementById('current-date').textContent = today;
+        }
+    </script>
+</body>
+</html>

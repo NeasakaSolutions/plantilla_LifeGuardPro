@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Gestión - Seguros de Vida</title>
+    <link rel="stylesheet" href="src/views/styles.css">
+</head>
+<body class="login-page">
+    <div class="login-container">
+        <div class="login-box">
+            <div class="logo-section">
+                <div class="logo-icon">🛡️</div>
+                <h1>LifeGuard Pro</h1>
+                <p>Sistema Integral de Gestión de Seguros de Vida</p>
+            </div>
+
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="email">Correo Electrónico</label>
+                    <input type="email" id="email" placeholder="correo@empresa.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Contraseña</label>
+                    <input type="password" id="password" placeholder="••••••••" required>
+                </div>
+
+                <div class="role-selection">
+                    <label>Selecciona tu Rol:</label>
+                    <div class="role-options">
+                        <label class="role-option">
+                            <input type="radio" name="role" value="admin" checked>
+                            <span class="role-label">
+                                <span class="role-icon">👔</span>
+                                <span class="role-text">
+                                    <strong>Administrador</strong>
+                                    <small>Acceso completo</small>
+                                </span>
+                            </span>
+                        </label>
+
+                        <label class="role-option">
+                            <input type="radio" name="role" value="employee">
+                            <span class="role-label">
+                                <span class="role-icon">👨‍💼</span>
+                                <span class="role-text">
+                                    <strong>Trabajador</strong>
+                                    <small>Registro de clientes</small>
+                                </span>
+                            </span>
+                        </label>
+
+                        <label class="role-option">
+                            <input type="radio" name="role" value="user">
+                            <span class="role-label">
+                                <span class="role-icon">📊</span>
+                                <span class="role-text">
+                                    <strong>Usuario</strong>
+                                    <small>Visualización</small>
+                                </span>
+                            </span>
+                        </label>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-login">Iniciar Sesión</button>
+            </form>
+
+            <div class="demo-info">
+                <p><strong>Demo:</strong> Usa cualquier correo y contraseña para acceder</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="src/views/script.js"></script>
+</body>
+</html>

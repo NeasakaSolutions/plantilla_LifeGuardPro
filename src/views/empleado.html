@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Empleado - LifeGuard Pro</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+</head>
+<body class="employee-page">
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-logo">🛡️</div>
+            <h2>LifeGuard Pro</h2>
+        </div>
+        <nav class="sidebar-menu">
+            <a href="#" class="menu-item active" data-view="dashboard">📊 Mi Dashboard</a>
+            <a href="#" class="menu-item" data-view="registrar-cliente">➕ Registrar Cliente</a>
+            <a href="#" class="menu-item" data-view="mis-clientes">👥 Mis Clientes</a>
+            <a href="#" class="menu-item" data-view="cotizador">💬 Cotizador de Planes</a>
+            <a href="#" class="menu-item" data-view="mi-reporte">📄 Mi Reporte Mensual</a>
+        </nav>
+        <button class="btn-logout" onclick="logout()">🚪 Cerrar Sesión</button>
+    </div>
+
+    <div class="main-content">
+        <div class="top-bar">
+            <div class="welcome-section">
+                <h1>Bienvenido, Juan Pérez</h1>
+                <p id="current-date"></p>
+            </div>
+            <div class="user-section">
+                <span>👤 juan.perez@empresa.com</span>
+            </div>
+        </div>
+
+        <!-- DASHBOARD VIEW -->
+        <div id="dashboard" class="view active">
+            <div class="dashboard-grid">
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">👥</div>
+                    <div class="stat-info">
+                        <h3>Clientes Este Mes</h3>
+                        <p class="stat-value">6</p>
+                        <span class="stat-change">↑ 2 más que el mes anterior</span>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">💰</div>
+                    <div class="stat-info">
+                        <h3>Comisión Este Mes</h3>
+                        <p class="stat-value">$2,450.00</p>
+                        <span class="stat-change">↑ 15% más que el mes anterior</span>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">📈</div>
+                    <div class="stat-info">
+                        <h3>Total de Clientes</h3>
+                        <p class="stat-value">24</p>
+                        <span class="stat-change">12 activos este mes</span>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">⏰</div>
+                    <div class="stat-info">
+                        <h3>Próximo Cobro</h3>
+                        <p class="stat-value">2 Dic</p>
+                        <span class="stat-change">Clientes que deben pago</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="charts-section">
+                <div class="chart-container">
+                    <h2>Clientes por Plan - Últimos 6 Meses</h2>
+                    <canvas id="clientesChart"></canvas>
+                </div>
+
+                <div class="chart-container">
+                    <h2>Distribución de Planes</h2>
+                    <canvas id="planesChart"></canvas>
+                </div>
+            </div>
+
+            <div class="upcoming-payments">
+                <h2>Próximos Cobros</h2>
+                <div class="payments-list">
+                    <div class="payment-item">
+                        <div class="payment-info">
+                            <p><strong>Marta Rodríguez</strong> - Plan Premium</p>
+                            <small>$89.00 - Vence: 2 Dic 2024</small>
+                        </div>
+                        <div class="payment-status pending">Pendiente</div>
+                    </div>
+                    <div class="payment-item">
+                        <div class="payment-info">
+                            <p><strong>Luis Fernández</strong> - Plan Básico</p>
+                            <small>$45.00 - Vence: 3 Dic 2024</small>
+                        </div>
+                        <div class="payment-status pending">Pendiente</div>
+                    </div>
+                    <div class="payment-item">
+                        <div class="payment-info">
+                            <p><strong>Ana García</strong> - Plan Elite</p>
+                            <small>$150.00 - Vence: 5 Dic 2024</small>
+                        </div>
+                        <div class="payment-status pending">Pendiente</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- REGISTRAR CLIENTE VIEW -->
+        <div id="registrar-cliente" class="view">
+            <div class="form-container">
+                <h2>Registrar Nuevo Cliente</h2>
+                <form id="clienteForm" class="admin-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Nombre Completo</label>
+                            <input type="text" placeholder="Ej: Juan García López" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Correo Electrónico</label>
+                            <input type="email" placeholder="cliente@email.com" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Teléfono</label>
+                            <input type="tel" placeholder="+34 612 345 678" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Número de Identificación</label>
+                            <input type="text" placeholder="DNI/Pasaporte" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Seleccionar Plan</label>
+                            <select required id="planSelect">
+                                <option>Seleccionar plan</option>
+                                <option>Plan Básico - $45/mes</option>
+                                <option>Plan Premium - $89/mes</option>
+                                <option>Plan Elite - $150/mes</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Fecha de Inicio</label>
+                            <input type="date" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Frecuencia de Pago</label>
+                            <select required>
+                                <option>Seleccionar frecuencia</option>
+                                <option>Mensual</option>
+                                <option>Trimestral</option>
+                                <option>Semestral</option>
+                                <option>Anual</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Próximo Pago</label>
+                            <input type="date" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Notas Adicionales</label>
+                        <textarea placeholder="Datos adicionales del cliente..." rows="4"></textarea>
+                    </div>
+
+                    <button type="submit" class="btn-primary">✅ Registrar Cliente</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- MIS CLIENTES VIEW -->
+        <div id="mis-clientes" class="view">
+            <div class="section-header">
+                <h2>Mis Clientes Activos</h2>
+                <div class="search-bar">
+                    <input type="text" placeholder="🔍 Buscar cliente...">
+                </div>
+            </div>
+
+            <div class="clients-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Plan</th>
+                            <th>Monto Mensual</th>
+                            <th>Próximo Pago</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Marta Rodríguez</td>
+                            <td>Plan Premium</td>
+                            <td>$89.00</td>
+                            <td>02 Dic 2024</td>
+                            <td><span class="badge-warning">Próximo</span></td>
+                            <td>
+                                <button class="btn-small" onclick="editClient()">✏️ Editar</button>
+                                <button class="btn-small" onclick="markPaid()">✓ Marcar Pagado</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Luis Fernández</td>
+                            <td>Plan Básico</td>
+                            <td>$45.00</td>
+                            <td>03 Dic 2024</td>
+                            <td><span class="badge-warning">Próximo</span></td>
+                            <td>
+                                <button class="btn-small" onclick="editClient()">✏️ Editar</button>
+                                <button class="btn-small" onclick="markPaid()">✓ Marcar Pagado</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Ana García</td>
+                            <td>Plan Elite</td>
+                            <td>$150.00</td>
+                            <td>05 Dic 2024</td>
+                            <td><span class="badge-warning">Próximo</span></td>
+                            <td>
+                                <button class="btn-small" onclick="editClient()">✏️ Editar</button>
+                                <button class="btn-small" onclick="markPaid()">✓ Marcar Pagado</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Carlos Sánchez</td>
+                            <td>Plan Premium</td>
+                            <td>$89.00</td>
+                            <td>30 Nov 2024</td>
+                            <td><span class="badge-success">Pagado</span></td>
+                            <td>
+                                <button class="btn-small" onclick="editClient()">✏️ Editar</button>
+                                <button class="btn-small" onclick="viewHistory()">📋 Historial</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Elena Martínez</td>
+                            <td>Plan Básico</td>
+                            <td>$45.00</td>
+                            <td>28 Nov 2024</td>
+                            <td><span class="badge-success">Pagado</span></td>
+                            <td>
+                                <button class="btn-small" onclick="editClient()">✏️ Editar</button>
+                                <button class="btn-small" onclick="viewHistory()">📋 Historial</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Roberto López</td>
+                            <td>Plan Elite</td>
+                            <td>$150.00</td>
+                            <td>25 Nov 2024</td>
+                            <td><span class="badge-success">Pagado</span></td>
+                            <td>
+                                <button class="btn-small" onclick="editClient()">✏️ Editar</button>
+                                <button class="btn-small" onclick="viewHistory()">📋 Historial</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- COTIZADOR VIEW -->
+        <div id="cotizador" class="view">
+            <div class="section-header">
+                <h2>Cotizador de Planes de Seguros</h2>
+            </div>
+
+            <div class="plans-grid">
+                <div class="plan-card">
+                    <div class="plan-badge">BÁSICO</div>
+                    <h3>Plan Básico</h3>
+                    <div class="plan-price">
+                        <span class="currency">$</span>
+                        <span class="amount">45</span>
+                        <span class="period">/mes</span>
+                    </div>
+                    <div class="plan-features">
+                        <p>✓ Cobertura básica $100,000</p>
+                        <p>✓ Asistencia médica 24/7</p>
+                        <p>✓ Sin comisiones médicas</p>
+                        <p>✓ Validez nacional</p>
+                    </div>
+                    <button class="btn-plan" onclick="shareQuote('Básico')">📤 Compartir Cotización</button>
+                </div>
+
+                <div class="plan-card featured">
+                    <div class="plan-badge featured">POPULAR</div>
+                    <h3>Plan Premium</h3>
+                    <div class="plan-price">
+                        <span class="currency">$</span>
+                        <span class="amount">89</span>
+                        <span class="period">/mes</span>
+                    </div>
+                    <div class="plan-features">
+                        <p>✓ Cobertura amplia $250,000</p>
+                        <p>✓ Asistencia médica 24/7</p>
+                        <p>✓ Comisión médica 20%</p>
+                        <p>✓ Validez nacional e internacional</p>
+                    </div>
+                    <button class="btn-plan featured" onclick="shareQuote('Premium')">📤 Compartir Cotización</button>
+                </div>
+
+                <div class="plan-card">
+                    <div class="plan-badge">ÉLITE</div>
+                    <h3>Plan Elite</h3>
+                    <div class="plan-price">
+                        <span class="currency">$</span>
+                        <span class="amount">150</span>
+                        <span class="period">/mes</span>
+                    </div>
+                    <div class="plan-features">
+                        <p>✓ Cobertura total $500,000</p>
+                        <p>✓ Asistencia médica prioritaria</p>
+                        <p>✓ Comisión médica 35%</p>
+                        <p>✓ Cobertura mundial</p>
+                    </div>
+                    <button class="btn-plan" onclick="shareQuote('Elite')">📤 Compartir Cotización</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- MI REPORTE MENSUAL VIEW -->
+        <div id="mi-reporte" class="view">
+            <div class="section-header">
+                <h2>Mi Reporte Mensual</h2>
+                <button class="btn-primary" onclick="sendReport()">📤 Enviar Reporte Automático</button>
+            </div>
+
+            <div class="report-summary">
+                <div class="report-card">
+                    <h3>Resumen de Noviembre 2024</h3>
+                    <div class="report-data">
+                        <div class="report-row">
+                            <span>Clientes Nuevos:</span>
+                            <strong>6</strong>
+                        </div>
+                        <div class="report-row">
+                            <span>Total de Clientes Activos:</span>
+                            <strong>24</strong>
+                        </div>
+                        <div class="report-row">
+                            <span>Comisión Generada:</span>
+                            <strong>$2,450.00</strong>
+                        </div>
+                        <div class="report-row">
+                            <span>Tasa de Retención:</span>
+                            <strong>95%</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chart-container">
+                    <h2>Clientes por Plan</h2>
+                    <canvas id="reportPlanesChart"></canvas>
+                </div>
+            </div>
+
+            <div class="clients-breakdown">
+                <h2>Detalles de Clientes Registrados en Noviembre</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Plan</th>
+                            <th>Monto Mensual</th>
+                            <th>Fecha de Alta</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Marta Rodríguez</td>
+                            <td>Plan Premium</td>
+                            <td>$89.00</td>
+                            <td>05 Nov 2024</td>
+                        </tr>
+                        <tr>
+                            <td>Luis Fernández</td>
+                            <td>Plan Básico</td>
+                            <td>$45.00</td>
+                            <td>08 Nov 2024</td>
+                        </tr>
+                        <tr>
+                            <td>Ana García</td>
+                            <td>Plan Elite</td>
+                            <td>$150.00</td>
+                            <td>12 Nov 2024</td>
+                        </tr>
+                        <tr>
+                            <td>Diego López</td>
+                            <td>Plan Premium</td>
+                            <td>$89.00</td>
+                            <td>15 Nov 2024</td>
+                        </tr>
+                        <tr>
+                            <td>Sofía Pérez</td>
+                            <td>Plan Básico</td>
+                            <td>$45.00</td>
+                            <td>20 Nov 2024</td>
+                        </tr>
+                        <tr>
+                            <td>Gabriel Herrera</td>
+                            <td>Plan Premium</td>
+                            <td>$89.00</td>
+                            <td>25 Nov 2024</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="action-buttons">
+                <button class="btn-primary" onclick="downloadReport()">⬇️ Descargar Reporte en PDF</button>
+                <button class="btn-secondary" onclick="printReport()">🖨️ Imprimir Reporte</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            if(document.getElementById('clientesChart')) {
+                initClientesChart();
+            }
+            if(document.getElementById('planesChart')) {
+                initPlanesChart();
+            }
+            if(document.getElementById('reportPlanesChart')) {
+                initReportPlanesChart();
+            }
+            updateDate();
+        });
+
+        function initClientesChart() {
+            const ctx = document.getElementById('clientesChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre'],
+                    datasets: [{
+                        label: 'Clientes Nuevos',
+                        data: [4, 5, 3, 6, 5, 6],
+                        backgroundColor: '#667eea',
+                        borderRadius: 5
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                stepSize: 1
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function initPlanesChart() {
+            const ctx = document.getElementById('planesChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Plan Básico', 'Plan Premium', 'Plan Elite'],
+                    datasets: [{
+                        data: [8, 12, 4],
+                        backgroundColor: [
+                            '#667eea',
+                            '#f093fb',
+                            '#fa709a'
+                        ],
+                        borderColor: '#fff',
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: { position: 'right' }
+                    }
+                }
+            });
+        }
+
+        function initReportPlanesChart() {
+            const ctx = document.getElementById('reportPlanesChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: ['Plan Básico', 'Plan Premium', 'Plan Elite'],
+                    datasets: [{
+                        data: [2, 3, 1],
+                        backgroundColor: [
+                            '#667eea',
+                            '#f093fb',
+                            '#fa709a'
+                        ],
+                        borderColor: '#fff',
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true
+                }
+            });
+        }
+
+        function updateDate() {
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            const today = new Date().toLocaleDateString('es-ES', options);
+            document.getElementById('current-date').textContent = today;
+        }
+
+        function shareQuote(plan) {
+            alert('Cotización de ' + plan + ' compartida con el cliente');
+        }
+
+        function sendReport() {
+            alert('✅ Reporte enviado automáticamente al administrador');
+        }
+
+        function downloadReport() {
+            alert('📥 Descargando reporte en PDF...');
+        }
+
+        function printReport() {
+            window.print();
+        }
+    </script>
+</body>
+</html>
